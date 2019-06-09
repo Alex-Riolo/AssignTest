@@ -1,4 +1,4 @@
 package com.company;
 
-public class Node {
+public class Triangle {
 }
