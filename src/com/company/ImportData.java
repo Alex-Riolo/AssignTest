@@ -1,9 +1,10 @@
 package com.company;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,17 +20,18 @@ public class ImportData {
         this.traingleProperties = traingleProperties;
     }
 
-    public List<int[]> loadFile() {
+    public List<int[]> loadFile() throws FileNotFoundException {
 
         List<int[]> rowList = new ArrayList<int[]>();
         try {
             //ask user for file and then import it
-            FileDialog dialog = new FileDialog((Frame)null, "Select File to Open");
-            dialog.setDirectory("C:");
-            dialog.setMode(FileDialog.LOAD);
-            dialog.setVisible(true);
-            String file = dialog.getFile();
-            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            JFileChooser fc = new JFileChooser();
+            int returnVal = fc.showOpenDialog(null);
+            if (returnVal != JFileChooser.APPROVE_OPTION) {
+                throw new FileNotFoundException();
+            }
+            BufferedReader br = new BufferedReader(new FileReader(fc.getSelectedFile()));
             String st;
             //loop all the file and populate list of values line by line
             while ((st = br.readLine()) != null) {
@@ -44,7 +46,7 @@ public class ImportData {
                // System.out.println(st);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new FileNotFoundException();
         } catch (IOException e) {
             e.printStackTrace();
         }
