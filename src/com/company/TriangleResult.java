@@ -9,13 +9,14 @@ public class TriangleResult {
         this.data = Triangle.copy2DArray(data);
         this.original = Triangle.copy2DArray(original);
     }
-
+    //this method will return the shortest path
     public int getSmallestSum() {
         return data[0][0];
     }
-
-    public int[] getPath() {
+    //this method will work out the best path and will return a string in the required format
+    public String getPath() {
         int[] result = new int[data.length];
+        String path = "" + original[0][0]+ " + ";
         int x = 0;
         result[0] = original[0][0];
 
@@ -33,9 +34,9 @@ public class TriangleResult {
             }
 
             result[rowIndex] = originalRow[x];
+            path += originalRow[x] + " + ";
         }
-
-        return result;
+        return path.substring(0, path.length() - 3);
     }
 
 }
